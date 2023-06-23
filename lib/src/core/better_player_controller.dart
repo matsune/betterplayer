@@ -152,6 +152,8 @@ class BetterPlayerController {
   ///Was Picture in Picture opened.
   bool _wasInPipMode = false;
 
+  bool needsUpdateControlsAfterPip = false;
+
   ///Was player in fullscreen before Picture in Picture opened.
   bool _wasInFullScreenBeforePiP = false;
 
@@ -780,6 +782,17 @@ class BetterPlayerController {
       _postEvent(BetterPlayerEvent(BetterPlayerEventType.initialized));
     }
     if (currentVideoPlayerValue.isPip) {
+      if (Platform.isIOS) {
+        if (!_wasInPipMode) {
+          _wasInFullScreenBeforePiP = _isFullScreen;
+          _wasControlsEnabledBeforePiP = _controlsEnabled;
+          setControlsEnabled(false);
+
+          videoPlayerController?.pauseTimer();
+
+          _postEvent(BetterPlayerEvent(BetterPlayerEventType.pipStart));
+        }
+      }
       _wasInPipMode = true;
     } else if (_wasInPipMode) {
       _postEvent(BetterPlayerEvent(BetterPlayerEventType.pipStop));
@@ -790,6 +803,12 @@ class BetterPlayerController {
       if (_wasControlsEnabledBeforePiP) {
         setControlsEnabled(true);
       }
+      if (currentVideoPlayerValue.isPlaying) {
+        videoPlayerController?.startTimer();
+      } else {
+        videoPlayerController?.pauseTimer();
+      }
+      needsUpdateControlsAfterPip = true;
       videoPlayerController?.refresh();
     }
 
@@ -1064,18 +1083,18 @@ class BetterPlayerController {
         (await videoPlayerController!.isPictureInPictureSupported()) ?? false;
 
     if (isPipSupported) {
-      _wasInFullScreenBeforePiP = _isFullScreen;
-      _wasControlsEnabledBeforePiP = _controlsEnabled;
-      setControlsEnabled(false);
       if (Platform.isAndroid) {
+        _wasInFullScreenBeforePiP = _isFullScreen;
+        _wasControlsEnabledBeforePiP = _controlsEnabled;
+        setControlsEnabled(false);
+
         _wasInFullScreenBeforePiP = _isFullScreen;
         await videoPlayerController?.enablePictureInPicture(
             left: 0, top: 0, width: 0, height: 0);
         enterFullScreen();
         _postEvent(BetterPlayerEvent(BetterPlayerEventType.pipStart));
         return;
-      }
-      if (Platform.isIOS) {
+      } else if (Platform.isIOS) {
         final RenderBox? renderBox = betterPlayerGlobalKey.currentContext!
             .findRenderObject() as RenderBox?;
         if (renderBox == null) {
@@ -1131,11 +1150,11 @@ class BetterPlayerController {
   ///Handle VideoEvent when remote controls notification / PiP is shown
   void _handleVideoEvent(VideoEvent event) async {
     switch (event.eventType) {
-      case VideoEventType.play:
-        _postEvent(BetterPlayerEvent(BetterPlayerEventType.play));
+      case VideoEventType.playInPip:
+        _postEvent(BetterPlayerEvent(BetterPlayerEventType.playInPip));
         break;
-      case VideoEventType.pause:
-        _postEvent(BetterPlayerEvent(BetterPlayerEventType.pause));
+      case VideoEventType.pauseInPip:
+        _postEvent(BetterPlayerEvent(BetterPlayerEventType.pauseInPip));
         break;
       case VideoEventType.seek:
         _postEvent(BetterPlayerEvent(BetterPlayerEventType.seekTo));

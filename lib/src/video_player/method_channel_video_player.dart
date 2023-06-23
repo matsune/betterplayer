@@ -378,15 +378,15 @@ class MethodChannelVideoPlayer extends VideoPlayerPlatform {
             key: key,
           );
 
-        case 'play':
+        case 'playInPip':
           return VideoEvent(
-            eventType: VideoEventType.play,
+            eventType: VideoEventType.playInPip,
             key: key,
           );
 
-        case 'pause':
+        case 'pauseInPip':
           return VideoEvent(
-            eventType: VideoEventType.pause,
+            eventType: VideoEventType.pauseInPip,
             key: key,
           );
 
@@ -407,6 +407,7 @@ class MethodChannelVideoPlayer extends VideoPlayerPlatform {
           return VideoEvent(
             eventType: VideoEventType.pipStop,
             key: key,
+            position: Duration(milliseconds: map['position'] as int),
           );
 
         default:

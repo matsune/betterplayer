@@ -682,7 +682,9 @@ class _BetterPlayerMaterialControlsState
       if (!controlsNotVisible ||
           isVideoFinished(_controller!.value) ||
           _wasLoading ||
-          isLoading(_controller!.value)) {
+          isLoading(_controller!.value) ||
+          _betterPlayerController!.needsUpdateControlsAfterPip) {
+        _betterPlayerController!.needsUpdateControlsAfterPip = false;
         setState(() {
           _latestValue = _controller!.value;
           if (isVideoFinished(_latestValue) &&

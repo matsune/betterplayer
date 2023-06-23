@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly) bool isInitialized;
 @property(nonatomic, readonly) NSString* key;
 @property(nonatomic, readonly) int failedCount;
-@property(nonatomic) AVPlayerLayer* _playerLayer;
+@property(nonatomic, readonly) AVPlayerLayer* _playerLayer;
 @property(nonatomic) bool _pictureInPicture;
 @property(nonatomic) bool _observersAdded;
 @property(nonatomic) int stalledCount;

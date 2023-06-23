@@ -447,11 +447,11 @@ enum VideoEventType {
   /// The video stopped to buffer.
   bufferingEnd,
 
-  /// The video is set to play
-  play,
+  /// The video is set to play in Picture in Picture mode
+  playInPip,
 
-  /// The video is set to pause
-  pause,
+  /// The video is set to pause in Picture in Picture mode
+  pauseInPip,
 
   /// The video is set to given to position
   seek,
