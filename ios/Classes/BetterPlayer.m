@@ -64,7 +64,13 @@ BetterPlayerView *_playerView;
 }
 
 - (nonnull UIView *)view {
-    return _playerView;
+    if (self.isFullscreen) {
+        BetterPlayerView *playerView = [[BetterPlayerView alloc] initWithFrame:CGRectZero];
+        playerView.player = _player;
+        return playerView;
+    } else {
+        return _playerView;
+    }
 }
 
 - (void)addObservers:(AVPlayerItem*)item {
@@ -570,6 +576,10 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
     _player.volume = (float)((volume < 0.0) ? 0.0 : ((volume > 1.0) ? 1.0 : volume));
 }
 
+- (void)setIsFullscreen:(BOOL)isFullscreen {
+    _isFullscreen = isFullscreen;
+}
+
 - (void)setSpeed:(double)speed result:(FlutterResult)result {
     if (speed == 1.0 || speed == 0.0) {
         _playerRate = 1;
@@ -625,7 +635,8 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
             });
         } else {
             // Fallback on earlier versions
-        } }
+        }
+    }
 }
 
 #if TARGET_OS_IOS

@@ -126,6 +126,17 @@ class MethodChannelVideoPlayer extends VideoPlayerPlatform {
   }
 
   @override
+  Future<void> setIsFullscreen(int? textureId, bool isFullscreen) {
+    return _channel.invokeMethod<void>(
+      'setIsFullscreen',
+      <String, dynamic>{
+        'textureId': textureId,
+        'isFullscreen': isFullscreen,
+      },
+    );
+  }
+
+  @override
   Future<void> setLooping(int? textureId, bool looping) {
     return _channel.invokeMethod<void>(
       'setLooping',

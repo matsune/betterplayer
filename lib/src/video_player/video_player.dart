@@ -410,6 +410,11 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
     return _initializingCompleter.future;
   }
 
+  Future<void> setIsFullscreen(bool isFullscreen) async {
+    await VideoPlayerPlatform.instance
+        .setIsFullscreen(_textureId, isFullscreen);
+  }
+
   @override
   Future<void> dispose() async {
     await _creatingCompleter.future;

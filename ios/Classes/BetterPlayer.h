@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly) bool disposed;
 @property(nonatomic, readonly) bool isPlaying;
 @property(nonatomic) bool isLooping;
+@property(nonatomic) bool isFullscreen;
 @property(nonatomic, readonly) bool isInitialized;
 @property(nonatomic, readonly) NSString* key;
 @property(nonatomic, readonly) int failedCount;
@@ -49,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setDataSourceURL:(NSURL*)url withKey:(NSString*)key withCertificateUrl:(NSString*)certificateUrl withLicenseUrl:(NSString*)licenseUrl withHeaders:(NSDictionary*)headers withCache:(BOOL)useCache cacheKey:(NSString*)cacheKey cacheManager:(CacheManager*)cacheManager overriddenDuration:(int) overriddenDuration videoExtension: (NSString*) videoExtension;
 - (void)setVolume:(double)volume;
 - (void)setSpeed:(double)speed result:(FlutterResult)result;
+- (void)setIsFullscreen:(BOOL)isFullscreen;
 - (void) setAudioTrack:(NSString*) name index:(int) index;
 - (void)setTrackParameters:(int) width: (int) height: (int)bitrate;
 - (void) enablePictureInPicture: (CGRect) frame;

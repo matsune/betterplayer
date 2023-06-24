@@ -391,7 +391,10 @@ bool _remoteCommandsInitialized = false;
             result(nil);
         } else if ([@"setSpeed" isEqualToString:call.method]) {
             [player setSpeed:[[argsMap objectForKey:@"speed"] doubleValue] result:result];
-        }else if ([@"setTrackParameters" isEqualToString:call.method]) {
+        } else if ([@"setIsFullscreen" isEqualToString:call.method]) {
+            [player setIsFullscreen:[[argsMap objectForKey:@"isFullscreen"] boolValue]];
+            result(nil);
+        } else if ([@"setTrackParameters" isEqualToString:call.method]) {
             int width = [argsMap[@"width"] intValue];
             int height = [argsMap[@"height"] intValue];
             int bitrate = [argsMap[@"bitrate"] intValue];

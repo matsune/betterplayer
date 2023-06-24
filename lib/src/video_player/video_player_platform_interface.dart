@@ -86,6 +86,10 @@ abstract class VideoPlayerPlatform {
     throw UnimplementedError('setDataSource() has not been implemented.');
   }
 
+  Future<void> setIsFullscreen(int? textureId, bool isFullscreen) {
+    throw UnimplementedError('setIsFullscreen() has not been implemented.');
+  }
+
   /// Returns a Stream of [VideoEventType]s.
   Stream<VideoEvent> videoEventsFor(int? textureId) {
     throw UnimplementedError('videoEventsFor() has not been implemented.');

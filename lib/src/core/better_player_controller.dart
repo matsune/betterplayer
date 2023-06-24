@@ -591,12 +591,14 @@ class BetterPlayerController {
   ///Enables full screen mode in player. This will trigger route change.
   void enterFullScreen() {
     _isFullScreen = true;
+    videoPlayerController?.setIsFullscreen(true);
     _postControllerEvent(BetterPlayerControllerEvent.openFullscreen);
   }
 
   ///Disables full screen mode in player. This will trigger route change.
   void exitFullScreen() {
     _isFullScreen = false;
+    videoPlayerController?.setIsFullscreen(false);
     _postControllerEvent(BetterPlayerControllerEvent.hideFullscreen);
   }
 
@@ -604,8 +606,10 @@ class BetterPlayerController {
   void toggleFullScreen() {
     _isFullScreen = !_isFullScreen;
     if (_isFullScreen) {
+      videoPlayerController?.setIsFullscreen(true);
       _postControllerEvent(BetterPlayerControllerEvent.openFullscreen);
     } else {
+      videoPlayerController?.setIsFullscreen(false);
       _postControllerEvent(BetterPlayerControllerEvent.hideFullscreen);
     }
   }
